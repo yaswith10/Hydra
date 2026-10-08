@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 .env
+
+# Databases created by django
+db.sqlite3
