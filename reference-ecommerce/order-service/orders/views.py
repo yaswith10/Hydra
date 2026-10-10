@@ -24,12 +24,42 @@ class ReserveInventoryView(APIView):
             order.transition_to(OrderStatus.INVENTORY_RESERVED)
         except ValueError:
             return Response({
-                "detail" : "Invalid order status transiton."
+                "error" : "Invalid order status transiton"
             }, status=status.HTTP_409_CONFLICT)
         return Response({
-            "message" : f"The Status of Order {order.id} has been changed to Inventory Reserved",
+            "message" : f"The status of order {order.id} has been changed to Inventory Reserved",
             "data" : OrderSerializer(order).data
         }, status=status.HTTP_200_OK)
+
+class CompletePaymentView(APIView):
+    def post(self, request: Request, pk):
+        order = get_object_or_404(Order, pk=pk)
+        try:
+            order.transition_to(OrderStatus.PAYMENT_COMPLETED)
+        except ValueError:
+            return Response({
+                "error" : "Invalid order status transition"
+            },status=status.HTTP_409_CONFLICT)
+
+        return Response({
+            "message" : f"The status of order {order.id} has been changed to Payment Completed",
+            "data" : OrderSerializer(order).data
+        },status=status.HTTP_200_OK)
+
+class CompleteOrderView(APIView):
+    def post(self, request: Request, pk):
+        order = get_object_or_404(Order, pk=pk)
+        try:
+            order.transition_to(OrderStatus.COMPLETED)
+        except ValueError:
+            return Response({
+                "error" : "Invalid order status transition"
+            }, status=status.HTTP_409_CONFLICT)
+
+        return Response({
+            "message" : f"The status of order {order.id} has been changed to Completed",
+            "data" : OrderSerializer(order).data
+        })
 
 
 
