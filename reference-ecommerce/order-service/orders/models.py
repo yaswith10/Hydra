@@ -24,3 +24,22 @@ class Order(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    ALLOWED_TRANSITIONS = {
+        OrderStatus.PENDING : { OrderStatus.INVENTORY_RESERVED},
+        OrderStatus.INVENTORY_RESERVED : { OrderStatus.PAYMENT_COMPLETED},
+        OrderStatus.PAYMENT_COMPLETED: {OrderStatus.COMPLETED}
+    }
+
+    def transition_to(self, new_status):
+        allowed = self.ALLOWED_TRANSITIONS.get(self.status, set())
+
+        if new_status not in allowed:
+            raise ValueError(
+                f"Invalid order status transition: {self.status} -> {new_status}"
+            )
+
+        self.status = new_status
+        self.save(update_fields=["status", "updated_at"])
+
+    
