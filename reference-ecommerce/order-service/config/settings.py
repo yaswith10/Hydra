@@ -168,6 +168,11 @@ LOGGING = {
             "handlers" : ["console"],
             "level" : "DEBUG",
             "propogate" : False
+        },
+        "config.middleware" : {
+            "handlers" : ["console"],
+            "level" : "DEBUG",
+            "propogate" : False
         }
     }
 }
