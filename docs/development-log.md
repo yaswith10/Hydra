@@ -6,6 +6,8 @@ This document records Hydra's day-to-day engineering progress, implementation de
 
 * Added Logging functionality to the order-service using python-json-logger
 * Added middleware to generate and store random request-id
+* Added Logging for each request
+* Configured docker and Update the README.md to start the application
 
 ## 10-10-2026
 

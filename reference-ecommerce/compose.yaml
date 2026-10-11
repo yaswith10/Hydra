@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: hydra_orders
+      POSTGRES_USER: hydra
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD:?Set POSTGRESQL_PASSWORD in the environment}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hydra -d hydra_orders"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  order-service:
+    build:
+      context: ./order-service
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY in the environment}
+      DEBUG: "True"
+      POSTGRESQL_NAME: hydra_orders
+      POSTGRESQL_USER: hydra
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD:?Set POSTGRESQL_PASSWORD in the environment}
+      POSTGRESQL_HOST: db
+      POSTGRESQL_PORT: "5432"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

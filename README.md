@@ -2,7 +2,7 @@
 
 **AI-powered incident investigation and recovery platform.**
 
-Hydra aims to help investigate application failures, identify root causes, and support safe, verified recovery through observability data and AI-assisted analysis.
+Hydra aims to investigate application failures, identify root causes, and support safe, verified recovery through observability data and AI-assisted analysis.
 
 ## Table of Contents
 
@@ -27,6 +27,7 @@ Hydra consists of two main parts:
 
 * **Backend:** Python, Django, Django REST Framework
 * **Database:** PostgreSQL
+* **Containerization:** Docker, Docker Compose
 * **Observability:** OpenTelemetry, Prometheus, Grafana *(planned)*
 * **AI-assisted investigation:** LLM-based workflows *(planned)*
 
@@ -37,6 +38,9 @@ Hydra consists of two main parts:
 * [x] PostgreSQL persistence
 * [x] Basic order lifecycle and API endpoints
 * [x] Initial automated tests
+* [x] Dockerized reference application and PostgreSQL
+* [x] Automated database migrations during application startup
+* [x] Basic application health endpoint
 * [ ] Structured logging and distributed tracing
 * [ ] Metrics collection and dashboards
 * [ ] Incident detection and investigation workflows
@@ -49,3 +53,4 @@ Hydra consists of two main parts:
 The project is under active development. Individual components have their own setup instructions.
 
 Start with the [Reference E-Commerce Application](reference-ecommerce/) to explore the workload used to develop and test Hydra.
+
