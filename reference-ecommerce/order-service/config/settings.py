@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.RequestIDMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -134,4 +135,39 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+# Application's default Logging setting
+LOGGING = {
+    "version" : 1,
+    "disable_existing_loggers" : False,
+    "formatters" : {
+        "default_formatter" : {
+            "()" : "pythonjsonlogger.json.JsonFormatter",
+            "format" : "%(asctime)s %(levelname)s %(name)s %(message)s %(order_id)s %(request_id)s",
+            "defaults": {
+                "order_id": "-",
+                "request_id" : "-"
+            },
+        }
+    },
+    "filters": {
+        "request_id" : {
+            "()": "config.logging_context.RequestIDFilter"
+        }
+    },
+    "handlers" : {
+        "console" : {
+            "class" : "logging.StreamHandler",
+            "formatter" : "default_formatter",
+            "filters" : ["request_id"]
+        }
+    },
+    "loggers" : {
+        "orders" : {
+            "handlers" : ["console"],
+            "level" : "DEBUG",
+            "propogate" : False
+        }
+    }
 }

@@ -4,14 +4,23 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
+import logging
 
 from .models import Order, OrderStatus
 from .serializers import OrderSerializer
+
 # Create your views here.
+
+logger = logging.getLogger(__name__)
+
 
 class ListCreateOrderView(ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    def perform_create(self, serializer):
+        order = serializer.save()
+        logger.info("Order created succesfully: order_id=%s", order.pk)
 
 class RetrieveOrderView(RetrieveAPIView):
     queryset = Order.objects.all()
@@ -23,8 +32,11 @@ class ReserveInventoryView(APIView):
         try:
             order.transition_to(OrderStatus.INVENTORY_RESERVED)
         except ValueError:
+            logger.warning(f"Invalid order status transition", extra={
+                "order_id" : order.pk
+            })
             return Response({
-                "error" : "Invalid order status transiton"
+                "error" : "Invalid order status transition"
             }, status=status.HTTP_409_CONFLICT)
         return Response({
             "message" : f"The status of order {order.id} has been changed to Inventory Reserved",
@@ -37,6 +49,9 @@ class CompletePaymentView(APIView):
         try:
             order.transition_to(OrderStatus.PAYMENT_COMPLETED)
         except ValueError:
+            logger.warning(f"Invalid order status transition", extra={
+                "order_id" : order.pk
+            })
             return Response({
                 "error" : "Invalid order status transition"
             },status=status.HTTP_409_CONFLICT)
@@ -52,6 +67,9 @@ class CompleteOrderView(APIView):
         try:
             order.transition_to(OrderStatus.COMPLETED)
         except ValueError:
+            logger.warning(f"Invalid order status transition", extra={
+                "order_id" : order.pk
+            })
             return Response({
                 "error" : "Invalid order status transition"
             }, status=status.HTTP_409_CONFLICT)
