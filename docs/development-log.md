@@ -2,6 +2,10 @@
 
 This document records Hydra's day-to-day engineering progress, implementation decisions, debugging work, and planned improvements. Entries are organized by development date and reconstructed from Git history and project notes.
 
+## 12-10-2026
+
+* Added and Configured Opentelemetry to observe the requests
+
 ## 11-10-2026
 
 * Added Logging functionality to the order-service using python-json-logger

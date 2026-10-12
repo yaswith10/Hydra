@@ -50,7 +50,88 @@ Hydra consists of two main parts:
 
 ## Getting Started
 
-The project is under active development. Individual components have their own setup instructions.
+### Prerequisites
 
-Start with the [Reference E-Commerce Application](reference-ecommerce/) to explore the workload used to develop and test Hydra.
+Install the following software:
 
+* [Git](https://git-scm.com/)
+* [Docker Engine](https://docs.docker.com/engine/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd Hydra/reference-ecommerce
+```
+
+Replace `<repository-url>` with the URL of the Hydra Git repository.
+
+### 2. Configure Environment Variables
+
+Create `order-service/.env` and add:
+
+```dotenv
+POSTGRESQL_NAME=hydra_orders
+POSTGRESQL_USER=hydra
+POSTGRESQL_PASSWORD=replace_with_a_secure_password
+POSTGRESQL_HOST=localhost
+POSTGRESQL_PORT=5432
+
+DJANGO_SECRET_KEY=replace_with_a_secret_key
+DEBUG=True
+```
+
+Use secure, unique values for the database password and Django secret key. Never commit `.env` to version control.
+
+When running through Docker Compose, the Order Service must use `POSTGRESQL_HOST=db`. The Compose configuration should override this value inside the container; `localhost` is for running Django directly on the host.
+
+Ensure the Compose configuration uses the same `POSTGRESQL_*` variable names and passes the database credentials to PostgreSQL and the Order Service.
+
+### 3. Start the Application
+
+From the `reference-ecommerce/` directory, make `POSTGRESQL_PASSWORD` and `DJANGO_SECRET_KEY` available to Docker Compose. Then run:
+
+```bash
+docker compose up --build -d
+```
+
+The Order Service applies pending database migrations during startup.
+
+### 4. Verify the Setup
+
+Check the container status:
+
+```bash
+docker compose ps
+```
+
+Check the health endpoint:
+
+```bash
+curl http://localhost:8000/health/
+```
+
+Expected response:
+
+```json
+{"status": "ok"}
+```
+
+View application logs:
+
+```bash
+docker compose logs -f order-service
+```
+
+### 5. Stop the Application
+
+```bash
+docker compose down
+```
+
+This stops and removes the containers while preserving the PostgreSQL named volume and its data.
+
+**Warning:** Running `docker compose down -v` also removes the database volume and deletes its stored data.
+
+For component-specific instructions, see the README files within the relevant directories.

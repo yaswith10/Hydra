@@ -176,3 +176,8 @@ LOGGING = {
         }
     }
 }
+
+
+from config.telemetry import configure_tracing
+
+configure_tracing()
