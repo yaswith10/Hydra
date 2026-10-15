@@ -11,3 +11,4 @@ typing_extensions==4.16.0
 opentelemetry-distro
 opentelemetry-exporter-otlp
 opentelemetry-instrumentation-django
+django-prometheus
