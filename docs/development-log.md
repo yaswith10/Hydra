@@ -3,18 +3,21 @@
 This document records Hydra's day-to-day engineering progress, implementation decisions, debugging work, and planned improvements. Entries are organized by development date and reconstructed from Git history and project notes.
 
 ## 15-10-2026
-
+* Integrated django-prometheus into order service to expose application metrics at /metrics.
+* Added prometheus to docker compose and configured to scrape the order service every 5 seconds.
+* Resolved Docker port mapping and django ALLOWED_HOSTS configuration issues to establish sucessful metric collection.
+* verified prometheus target is UP and collecting metrics from Order Service.
 
 ## 12-10-2026
 
-* Added and Configured Opentelemetry to observe the requests
+* Added and Configured Opentelemetry to observe the requests.
 
 ## 11-10-2026
 
-* Added Logging functionality to the order-service using python-json-logger
-* Added middleware to generate and store random request-id
-* Added Logging for each request
-* Configured docker and Update the README.md to start the application
+* Added Logging functionality to the order-service using python-json-logger.
+* Added middleware to generate and store random request-id.
+* Added Logging for each request.
+* Configured docker and Update the README.md to start the application.
 
 ## 10-10-2026
 
