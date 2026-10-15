@@ -1,4 +1,16 @@
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - order-service
+    
   db:
     image: postgres:18
     environment:
@@ -43,6 +55,8 @@ services:
       - "16686:16686"
       - "4317:4317"
       - "4318:4318"
+
 volumes:
   postgres_data:
+  prometheus_data:
 

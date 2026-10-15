@@ -19,6 +19,7 @@ from django.urls import path, include
 from .views import HealthView
 
 urlpatterns = [
+    path("", include("django_prometheus.urls")),
     path("health/", HealthView.as_view(), name="health"),
     path("orders/api/", include("orders.urls")),
     path('admin/', admin.site.urls),
