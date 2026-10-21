@@ -2,8 +2,14 @@
 
 This document records Hydra's day-to-day engineering progress, implementation decisions, debugging work, and planned improvements. Entries are organized by development date and reconstructed from Git history and project notes.
 
+## 21-10-2026
+* Started making deliberate fault injections. Today we have created and added FaultInjectionMiddleware which induces delay from the request header X-Hydra-Inject-Delay.
+* After that we have added deliberated error injection using header X-Hydra-Inject-Error in the same FaultInjectionMiddleware.
+* Now deliberate fault injection step is completed. Now lets start core Hydra which finds these deliberate errors.
+
 ## 18-10-2026
 * Configured Grafana with Prometheus as its data source and created three monitoring panels for HTTP request rate, response status, and request latency.
+* Here by, the basic setup of refernce-application is completed. From next week, Controlled Incident Simulation phase will begin
 
 ## 15-10-2026
 * Integrated django-prometheus into order service to expose application metrics at /metrics.

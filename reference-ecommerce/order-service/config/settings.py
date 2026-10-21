@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'config.middleware.RequestIDMiddleware',
+    'config.middleware.FaultInjectionMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
