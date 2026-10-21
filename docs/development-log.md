@@ -1,11 +1,13 @@
 # Hydra Development Log
 
-This document records Hydra's day-to-day engineering progress, implementation decisions, debugging work, and planned improvements. Entries are organized by development date and reconstructed from Git history and project notes.
+This document records Hydra's day-to-day engineering progress, implementation decisions, debugging work, and planned improvements. Entries are organized by development date.
 
 ## 21-10-2026
 * Started making deliberate fault injections. Today we have created and added FaultInjectionMiddleware which induces delay from the request header X-Hydra-Inject-Delay.
 * After that we have added deliberated error injection using header X-Hydra-Inject-Error in the same FaultInjectionMiddleware.
 * Now deliberate fault injection step is completed. Now lets start core Hydra which finds these deliberate errors.
+* In Hydra Observer application, we have created the integratons app to integrate a reference application to our hydra observer.
+* Created Application model. It represents reference application.
 
 ## 18-10-2026
 * Configured Grafana with Prometheus as its data source and created three monitoring panels for HTTP request rate, response status, and request latency.
