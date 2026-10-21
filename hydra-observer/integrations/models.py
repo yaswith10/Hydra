@@ -5,7 +5,7 @@ from django.db import models
 class EnvironmentChoice(models.TextChoices):
     DEVELOPMENT = ("DEVELOPMENT", "Development")
     STAGING = ("STAGING", "Staging")
-    PRODUCTION = ("PRODUCITON", "Production")
+    PRODUCTION = ("PRODUCTION", "Production")
 
 class Application(models.Model):
     """
